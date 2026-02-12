@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import { Colors } from "../../styles";
 
 export const NavBarContainer = styled.nav`
     width: 100%;
     height: 60px;
-    background-color: #181DAE;
+    background-color: ${Colors.backgroundSecondary};
     color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
     div {
