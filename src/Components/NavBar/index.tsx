@@ -1,20 +1,24 @@
+import { NavBarContainer } from "./styles"
+
 const NavBar = () => {
     return(
-        <nav>
+        <NavBarContainer>
             <div>
-                <h1>
+                <div>
+                    <h1 className="big-font">
                     Plataforma NFe
-                </h1>
+                    </h1>
+                </div>
+                <ul className="small-font">
+                    <li>
+                        <a href="">Danilo</a>
+                    </li>
+                    <li>
+                        <a href="">Sair</a>
+                    </li>
+                </ul>
             </div>
-            <ul>
-                <li>
-                    <a href="">Danilo</a>
-                </li>
-                <li>
-                    <a href="">Sair</a>
-                </li>
-            </ul>
-        </nav>
+        </NavBarContainer>
     )
 }
 
