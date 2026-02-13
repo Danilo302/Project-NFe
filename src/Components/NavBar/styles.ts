@@ -6,7 +6,6 @@ export const NavBarContainer = styled.nav`
     height: 60px;
     background-color: ${Colors.backgroundSecondary};
     color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
     div {

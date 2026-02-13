@@ -5,7 +5,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'Inter', sans-serif;
     list-style: none;
     text-decoration: none;
     scroll-behavior: smooth;
@@ -40,6 +40,10 @@ export const Colors = {
     enfasis: "#D1D9E0",
 }
 
+export const Container = styled.div`
+  display: grid;
+  grid-template-columns: 224px auto;
+`
 
 
 export default GlobalStyles

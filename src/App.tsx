@@ -1,6 +1,7 @@
 import NavBar from "./Components/NavBar"
+import SiderBar from "./Components/SideBar"
 import Dashboards from "./Containers/Dashboards"
-import GlobalStyles from "./styles"
+import GlobalStyles, { Container } from "./styles"
 
 
 function App() {
@@ -9,7 +10,10 @@ function App() {
       <>
         <GlobalStyles/>
         <NavBar/>
+        <Container>
+          <SiderBar/>
         <Dashboards/>
+        </Container>
       </>
   )
 }
