@@ -41,8 +41,8 @@ export const Colors = {
 }
 
 export const Container = styled.div`
-  display: grid;
-  grid-template-columns: 224px auto;
+    display: grid;
+    grid-template-columns: 224px auto;
 `
 
 

@@ -1,20 +1,16 @@
-import NavBar from "./Components/NavBar"
-import SiderBar from "./Containers/SideBar"
-import Dashboards from "./Containers/Dashboards"
-import GlobalStyles, { Container } from "./styles"
+
+import { BrowserRouter } from "react-router-dom"
+import GlobalStyles from "./styles"
+import Rotas from "./routes"
 
 
 function App() {
   
   return (
-      <>
+      <BrowserRouter>
         <GlobalStyles/>
-        <NavBar/>
-        <Container>
-          <SiderBar/>
-        <Dashboards/>
-        </Container>
-      </>
+        <Rotas />
+      </BrowserRouter>
   )
 }
 
