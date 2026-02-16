@@ -7,6 +7,7 @@ export const NavBarContainer = styled.nav`
     background-color: ${Colors.backgroundSecondary};
     color: #FFFFFF;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
 
     div {
         width: 100%;

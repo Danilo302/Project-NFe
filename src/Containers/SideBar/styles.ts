@@ -5,6 +5,7 @@ export const SideBarContainer = styled.aside`
     width: 100%;
     height: 100vh;
     background-color: ${Colors.primary};
+    z-index: 1000;
 
     div {
         margin-top: 32px;

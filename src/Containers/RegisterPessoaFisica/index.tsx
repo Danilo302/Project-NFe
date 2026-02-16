@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import * as Yup  from "yup";
 import { useRegisterMutation, useGetMunicipiosQuery } from "../../services/api";
 import { useState } from "react";
+import { Container } from "./styles";
 
 const RegisterPessoaFisica = () => {
     const [register] = useRegisterMutation();
@@ -43,7 +44,7 @@ const RegisterPessoaFisica = () => {
     });
 
     return (
-        <div>
+        <Container>
             <form onSubmit={form.handleSubmit}>
                 <label htmlFor="name">Nome:</label>
                 <input type="text" id="name" name="name" value={form.values.nome} onChange={form.handleChange} />
@@ -71,14 +72,16 @@ const RegisterPessoaFisica = () => {
                     setSelectedUf(e.target.value);
                     form.setFieldValue('municipio', '');
                 }}>
-                    {municipios?.map((municipio) => (
-                        <option key={municipio.id} value={municipio.uf.sigla}>{municipio.uf.nome}</option>
+                    {municipios?.filter((m, index, array) => index === array.findIndex((x) => x.uf.sigla === m.uf.sigla))
+                    .map((municipio) => (
+                        <option key={municipio.id} value={municipio.uf.sigla}>
+                            {municipio.uf.nome}
+                        </option>
                     ))}
                 </select>
 
                 <label htmlFor="municipio">Município:</label>
                 <select name="municipio" id="municipio" onChange={(e) => {
-                    setSelectedUf(e.target.value);
                     form.setFieldValue('municipio', e.target.value);
                 }}>
                     {municipios?.filter(m => m.uf.sigla === selectedUf).map(m => (
@@ -88,7 +91,7 @@ const RegisterPessoaFisica = () => {
 
                 <button type="submit">Registrar</button>
             </form>
-        </div>
+        </Container>
     )
 }
 

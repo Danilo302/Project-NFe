@@ -1,4 +1,5 @@
 import { SideBarContainer } from "./styles"
+import { Link } from "react-router-dom"
 
 const SideBar = () => {
     return (
@@ -11,7 +12,7 @@ const SideBar = () => {
                     <a href="">Dashboard</a>
                 </li>
                 <li>
-                    <a href="">Dashboard</a>
+                    <Link to="/Cadastrar">Cadastrar</Link>
                 </li>
                 <li>
                     <a href="">Dashboard</a>
