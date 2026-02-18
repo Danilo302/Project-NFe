@@ -9,7 +9,7 @@ const SideBar = () => {
             </div>
             <ul className="small-font">
                 <li>
-                    <a href="">Dashboard</a>
+                    <Link to="/">Dashboard</Link>
                 </li>
                 <li>
                     <Link to="/Cadastrar">Cadastrar</Link>

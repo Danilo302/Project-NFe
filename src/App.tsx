@@ -1,9 +1,11 @@
 
 import { BrowserRouter } from "react-router-dom"
-import GlobalStyles from "./styles"
+import GlobalStyles, { Container } from "./styles"
 import Rotas from "./routes"
 import { Provider } from "react-redux"
 import { store } from "./store"
+import NavBar from "./Components/NavBar"
+import SideBar from "./Containers/SideBar"
 
 
 function App() {
@@ -12,7 +14,11 @@ function App() {
         <Provider store={store}>
       <BrowserRouter>
         <GlobalStyles/>
-        <Rotas />
+        <NavBar />
+        <Container>
+          <SideBar />
+          <Rotas />
+        </Container>
       </BrowserRouter>
         </Provider>
   )
