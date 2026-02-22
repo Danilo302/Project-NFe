@@ -3,6 +3,7 @@ import * as Yup  from "yup";
 import { useRegisterMutation, useGetMunicipiosQuery } from "../../services/api";
 import { useState, useMemo } from "react";
 import { Container } from "./styles";
+import { RegimeTributario } from "../../Utils/enums";
 
 const RegisterPessoaFisica = () => {
     const [register] = useRegisterMutation();
@@ -48,7 +49,8 @@ const RegisterPessoaFisica = () => {
         }),
         onSubmit: async (values) => {
             try {
-                await register(JSON.stringify({
+
+                const payload = {
                     nome: values.nome,
                     cpf: values.cpf,
                     email: values.email,
@@ -57,12 +59,15 @@ const RegisterPessoaFisica = () => {
                     inscricaoEstadual: values.inscricaoEstadual,
                     regimeTributario: values.regimeTributario,
                     municipio: values.municipio
-                })).unwrap();
+                };
+                await register(payload).unwrap();
                 alert("Cadastro realizado com sucesso!");
                 form.resetForm();
-            } catch (error) {
-                alert("Erro ao cadastrar pessoa física");
-                console.error(error);
+            } catch (err: any) {
+
+                const mensagemErro = err.data?.message || "Erro desconhecido ao cadastrar";
+                alert("Erro ao cadastrar pessoa física: " + mensagemErro);
+                console.error(err);
             }
         }
     });
@@ -89,7 +94,14 @@ const RegisterPessoaFisica = () => {
                 <input type="text" id="inscricaoEstadual" name="inscricaoEstadual" value={form.values.inscricaoEstadual} onChange={form.handleChange} />
 
                 <label htmlFor="regimeTributario">Regime Tributário:</label>
-                <input type="text" id="regimeTributario" name="regimeTributario" value={form.values.regimeTributario} onChange={form.handleChange} />
+                <select name="regimeTributario" id="regimeTributario" value={form.values.regimeTributario} onChange={form.handleChange}>
+                    <option value="">Selecione um regime tributário</option>
+                    {Object.values(RegimeTributario).map((regime) => (
+                        <option key={regime} value={regime}>
+                            {regime.replace(/_/g, " ")}
+                        </option>
+                    ))}
+                </select>
 
                 <label htmlFor="uf">UF:</label>
                 <select
@@ -116,14 +128,17 @@ const RegisterPessoaFisica = () => {
                     name="municipio"
                     id="municipio"
                     value={form.values.municipio}
-                    onChange={(e) => form.setFieldValue("municipio", e.target.value)}
+                    onChange={(e) => {
+                        console.log("Município selecionado:", e.target.value);
+                        form.setFieldValue("municipio", e.target.value);
+                    }}
                     disabled={!selectedUf}
                     >
                     <option value="">Selecione um município</option>
 
                     {municipiosFiltrados.map((m) => (
-                        <option key={m.id} value={m.nome}>
-                        {m.nome}
+                        <option key={m.codigo} value={m.codigo}>
+                            {m.nome}
                         </option>
                     ))}
                 </select>

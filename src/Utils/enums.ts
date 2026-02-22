@@ -1,0 +1,6 @@
+export enum RegimeTributario {
+    SIMPLES_NACIONAL = "SIMPLES_NACIONAL",
+    REGIME_NORMAL = "REGIME_NORMAL",
+    LUCRO_REAL = "LUCRO_REAL",
+}
+
