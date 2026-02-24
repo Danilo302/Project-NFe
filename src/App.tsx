@@ -14,7 +14,6 @@ function App() {
         <Provider store={store}>
       <BrowserRouter>
         <GlobalStyles/>
-        <NavBar />
         <Container>
           <SideBar />
           <Rotas />

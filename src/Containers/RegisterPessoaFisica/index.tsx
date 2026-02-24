@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as Yup  from "yup";
 import { useRegisterMutation, useGetMunicipiosQuery } from "../../services/api";
 import { useState, useMemo } from "react";
-import { Container } from "./styles";
+import { Container, FormGroup, FormRow } from "./styles";
 import { RegimeTributario } from "../../Utils/enums";
 
 const RegisterPessoaFisica = () => {
@@ -75,76 +75,91 @@ const RegisterPessoaFisica = () => {
     return (
         <Container>
             <form onSubmit={form.handleSubmit}>
-                <label htmlFor="name">Nome:</label>
-                <input type="text" id="name" name="nome" value={form.values.nome} onChange={form.handleChange} />
 
-                <label htmlFor="cpf">CPF:</label>
-                <input type="text" id="cpf" name="cpf" value={form.values.cpf} onChange={form.handleChange} />
+                <div>
 
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" value={form.values.email} onChange={form.handleChange} />
+                    <FormGroup>
+                    <label htmlFor="name">Nome:</label>
+                    <input type="text" id="name" name="nome" value={form.values.nome} onChange={form.handleChange} />
 
-                <label htmlFor="password">Senha:</label>
-                <input type="password" id="password" name="senha" value={form.values.senha} onChange={form.handleChange} />
+                    <label htmlFor="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" value={form.values.cpf} onChange={form.handleChange} />
 
-                <label htmlFor="telefone">Telefone:</label>
-                <input type="text" id="telefone" name="telefone" value={form.values.telefone} onChange={form.handleChange} />
+                    <label htmlFor="email">Email:</label>
+                    <input type="email" id="email" name="email" value={form.values.email} onChange={form.handleChange} />
 
-                <label htmlFor="inscricaoEstadual">Inscrição Estadual:</label>
-                <input type="text" id="inscricaoEstadual" name="inscricaoEstadual" value={form.values.inscricaoEstadual} onChange={form.handleChange} />
+                    <label htmlFor="password">Senha:</label>
+                    <input type="password" id="password" name="senha" value={form.values.senha} onChange={form.handleChange} />
+                    </FormGroup>
 
-                <label htmlFor="regimeTributario">Regime Tributário:</label>
-                <select name="regimeTributario" id="regimeTributario" value={form.values.regimeTributario} onChange={form.handleChange}>
-                    <option value="">Selecione um regime tributário</option>
-                    {Object.values(RegimeTributario).map((regime) => (
-                        <option key={regime} value={regime}>
-                            {regime.replace(/_/g, " ")}
-                        </option>
-                    ))}
-                </select>
+                    <FormGroup>
+                    <label htmlFor="telefone">Telefone:</label>
+                    <input type="text" id="telefone" name="telefone" value={form.values.telefone} onChange={form.handleChange} />
 
-                <label htmlFor="uf">UF:</label>
-                <select
-                    name="uf"
-                    id="uf"
-                    value={selectedUf}
-                    onChange={(e) => {
-                    setSelectedUf(e.target.value);
-                    form.setFieldValue("municipio", "");
-                    }}
-                >
-                    <option value="">Selecione um estado</option>
+                    <label htmlFor="inscricaoEstadual">Inscrição Estadual:</label>
+                    <input type="text" id="inscricaoEstadual" name="inscricaoEstadual" value={form.values.inscricaoEstadual} onChange={form.handleChange} />
 
-                        {ufs.map((uf) => (
-                    <option key={uf.sigla} value={uf.sigla}>
-                        {uf.nome}
-                    </option>
-                    ))}
-                </select>
+                    <label htmlFor="regimeTributario">Regime Tributário:</label>
+                    <select name="regimeTributario" id="regimeTributario" value={form.values.regimeTributario} onChange={form.handleChange}>
+                        <option value="">Selecione um regime tributário</option>
+                        {Object.values(RegimeTributario).map((regime) => (
+                            <option key={regime} value={regime}>
+                                {regime.replace(/_/g, " ")}
+                            </option>
+                        ))}
+                    </select>
 
+                    <FormRow>
 
-                <label htmlFor="municipio">Município:</label>
-                <select
-                    name="municipio"
-                    id="municipio"
-                    value={form.values.municipio}
-                    onChange={(e) => {
-                        console.log("Município selecionado:", e.target.value);
-                        form.setFieldValue("municipio", e.target.value);
-                    }}
-                    disabled={!selectedUf}
+                    <FormGroup>
+                    <label htmlFor="uf">UF:</label>
+                    <select
+                        name="uf"
+                        id="uf"
+                        className="select-min"
+                        value={selectedUf}
+                        onChange={(e) => {
+                        setSelectedUf(e.target.value);
+                        form.setFieldValue("municipio", "");
+                        }}
                     >
-                    <option value="">Selecione um município</option>
+                        <option value="">Selecione um estado</option>
 
-                    {municipiosFiltrados.map((m) => (
-                        <option key={m.codigo} value={m.codigo}>
-                            {m.nome}
+                            {ufs.map((uf) => (
+                        <option key={uf.sigla} value={uf.sigla}>
+                            {uf.nome}
                         </option>
-                    ))}
-                </select>
+                        ))}
+                    </select>
+                    </FormGroup>
+
+                    <FormGroup>
+                    <label htmlFor="municipio">Município:</label>
+                    <select
+                        name="municipio"
+                        id="municipio"
+                        value={form.values.municipio}
+                        onChange={(e) => {
+                            console.log("Município selecionado:", e.target.value);
+                            form.setFieldValue("municipio", e.target.value);
+                        }}
+                        disabled={!selectedUf}
+                        >
+                        <option value="">Selecione um município</option>
+
+                        {municipiosFiltrados.map((m) => (
+                            <option key={m.codigo} value={m.codigo}>
+                                {m.nome}
+                            </option>
+                        ))}
+                    </select>
+                    </FormGroup>
+                    </FormRow>
+                    </FormGroup>
+                </div>
+                    <button type="submit">Registrar</button>
 
 
-                <button type="submit">Registrar</button>
             </form>
         </Container>
     )

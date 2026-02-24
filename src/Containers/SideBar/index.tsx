@@ -5,6 +5,11 @@ const SideBar = () => {
     return (
         <SideBarContainer>
             <div>
+                <h1 className="big-font">
+                    Plataforma NFe
+                </h1>
+            </div>
+            <div>
                 <input type="text" placeholder="Pesquisar" />
             </div>
             <ul className="small-font">
