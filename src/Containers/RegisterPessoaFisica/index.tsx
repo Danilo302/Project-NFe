@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as Yup  from "yup";
 import { useRegisterMutation, useGetMunicipiosQuery } from "../../services/api";
 import { useState, useMemo } from "react";
-import { Container, FormGroup, FormRow } from "./styles";
+import { Container, FormButton, FormGroup, FormRow } from "./styles";
 import { RegimeTributario } from "../../Utils/enums";
 
 const RegisterPessoaFisica = () => {
@@ -157,7 +157,9 @@ const RegisterPessoaFisica = () => {
                     </FormRow>
                     </FormGroup>
                 </div>
+                <FormButton>
                     <button type="submit">Registrar</button>
+                </FormButton>
 
 
             </form>

@@ -33,14 +33,27 @@ export const Container = styled.div`
         border-radius: 4px;
     }   
 
+    
+`
+export const FormButton = styled.div`
+    display: flex;
+    justify-content: center;
+
     button {
         padding: 0.75rem;
         background-color: ${Colors.sucess};
         color: ${Colors.backgroundPrimary};
+        width: 200px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
         font-weight: bold;
+        transition: color 0.3s, scale 0.3s;
+
+        &:hover {
+            color: #fff;
+            scale: 1.01;
+        }
     }
 `
 
