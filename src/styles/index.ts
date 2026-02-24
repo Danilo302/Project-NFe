@@ -42,8 +42,9 @@ export const Colors = {
 
 export const Container = styled.div`
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: auto 1fr;
     height: 100vh;
+    transition: all 0.3s ease;
 `
 
 
