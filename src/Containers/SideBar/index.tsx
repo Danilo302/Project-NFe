@@ -1,77 +1,56 @@
-import { BtnClose, SideBarContainer, SideBarContainerClosed } from "./styles"
-import { Link } from "react-router-dom"
-
-import { useState } from "react"
-import { Airplay, PanelLeftClose, PanelLeftOpen, UserPlus } from "lucide-react";
+import { Link } from "react-router-dom";
+import { BtnClose, ListItens, SideBarContainer, SideBarHeader } from "./styles";
+import { Airplay, CircleUserRound, LogOut, PanelLeftClose, UserPlus } from "lucide-react";
+import { useState } from "react";
 
 const SideBar = () => {
-    const [isOpenSideBar, setIsOpenSideBar] = useState(true);
+    const [isOpen, setIsOpen] = useState(true);
 
     return (
-        <>
-            {isOpenSideBar ? (
-                <SideBarContainer>              
-                <div>
-            <h1 className="big-font">
-                Plataforma NFe
-            </h1>
-        </div><div>
-                <input type="text" placeholder="Pesquisar" />
-            </div><ul className="small-font">
+        <SideBarContainer $isOpen={isOpen}>            
+                <SideBarHeader $isOpen={isOpen}>
+                    <h1 className="big-font">Plataforma NFe</h1>
+                    <BtnClose $isOpen={isOpen}>
+                        <a onClick={() => setIsOpen(!isOpen)}>
+                            <PanelLeftClose />
+                        </a>
+                    </BtnClose>
+                </SideBarHeader>
+        <ListItens>
+            <ul className="small-font">
                 <li>
                     <Link to="/">
                         <Airplay />
-                        Dashboard
+                        {isOpen && <span>Dashboard</span>}
                     </Link>
                 </li>
                 <li>
                     <Link to="/Cadastrar">
                         <UserPlus />
-                        Cadastrar
+                        {isOpen && <span>Cadastrar</span>}
                     </Link>
-                </li>
-                <li>
-
-                    <a href="">
-                        <Airplay />
-                        Dashboard
-                    </a>
-                </li>
-            </ul>
-            <BtnClose>
-                <a onClick={() => setIsOpenSideBar(false)}><PanelLeftClose /></a>
-            </BtnClose>
-                </ SideBarContainer>
-            ) : (
-                <SideBarContainerClosed>
-                <ul className="small-font">
-                <li>
-                    <Link to="/">
-                    <Airplay />
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/Cadastrar">
-                    <UserPlus />           
-                    </Link>
-                </li>
-                <li>
-                    
-                    <a href="">
-                        <Airplay />
-                    </a>
                 </li>
             </ul>
 
-                <BtnClose>
-                    <a onClick={() => setIsOpenSideBar(true)}>
-                        <PanelLeftOpen />
+            <ul className="small-font">
+                <li>
+                    <a href="">
+                        <CircleUserRound />
+                        {isOpen && <span>Profile</span>}
                     </a>
-                </BtnClose>
-                </ SideBarContainerClosed>
-            )}
-        </>
-    )
-}
+                </li>
+                <li>
+                    <a href="">
+                        <LogOut />
+                        {isOpen && <span>Logout</span>}
+                    </a>
+                </li>
+            </ul>
+        </ListItens>
 
-export default SideBar
+            
+        </SideBarContainer>
+    );
+};
+
+export default SideBar;

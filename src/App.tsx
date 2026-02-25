@@ -4,7 +4,6 @@ import GlobalStyles, { Container } from "./styles"
 import Rotas from "./routes"
 import { Provider } from "react-redux"
 import { store } from "./store"
-import NavBar from "./Components/NavBar"
 import SideBar from "./Containers/SideBar"
 
 
