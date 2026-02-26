@@ -1,31 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-//import { RegimeTributario } from "../Utils/enums";
-
-type UserType = {
-    id: string;
-    login: string;
-    senha: string;
-}
-
-type RegisterUserType = {
-    nome: string,
-    cpf: string,
-    email: string,
-    senha: string,
-    telefone: string,
-    inscricaoEstadual: string,
-    regimeTributario: string,
-    municipio: string
-}
-
-type MunicipioType = {
-    uf: {
-        sigla: string;
-        nome: string;
-    },
-    codigo: number;
-    nome: string;
-    }
 
 export const api = createApi({
     baseQuery: fetchBaseQuery({
@@ -46,6 +19,9 @@ export const api = createApi({
             body: body
             })
         }),
+        getPessoas: builder.query<RegisterUserType[], void>({
+            query: () => '/pessoas-fisicas'
+        }),
     register: builder.mutation<RegisterUserType, RegisterUserType>({
         query: (body) => ({
             url: '/pessoas-fisicas',
@@ -56,5 +32,5 @@ export const api = createApi({
     })
 });
 
-export const { usePurchaseMutation, useRegisterMutation, useGetMunicipiosQuery } = api;
+export const { usePurchaseMutation, useRegisterMutation, useGetMunicipiosQuery, useGetPessoasQuery } = api;
 export default api;

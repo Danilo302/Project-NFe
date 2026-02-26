@@ -25,9 +25,9 @@ const SideBar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link to="/Cadastrar">
+                    <Link to="/listar">
                         <UserPlus />
-                        {isOpen && <span>Cadastrar</span>}
+                        {isOpen && <span>Cadastro Geral</span>}
                     </Link>
                 </li>
             </ul>
