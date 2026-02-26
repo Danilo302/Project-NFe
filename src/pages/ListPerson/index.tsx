@@ -6,12 +6,12 @@ import { useGetPessoasQuery } from "../../services/api";
 
 
 const ListPerson = () => {
-    const { data, error, isLoading } = useGetPessoasQuery();
+    const { data } = useGetPessoasQuery();
 
 
     const [searchTerm, setSearchTerm] = useState("");
 
-  return (
+    return (
     <ListPersonContainer>
         <div>
             <h1 className="big-font">Cadastro geral</h1>
@@ -50,7 +50,7 @@ const ListPerson = () => {
         </table>
 
     </ListPersonContainer>
-  )
+)
 }
 
 export default ListPerson;

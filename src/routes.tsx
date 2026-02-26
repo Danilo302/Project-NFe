@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
-import AuthPage from './Pages/AuthPage';
-import HomePage from './Pages/Home';
-import RegisterPessoaFisica from './Containers/RegisterPessoaFisica';
-import ListPerson from './Containers/ListPerson';
+import AuthPage from './pages/AuthPage';
+import HomePage from './pages/Home';
+import RegisterPessoaFisica from './pages/RegisterPessoaFisica';
+import ListPerson from './pages/ListPerson';
 
 const Rotas = () => (
     <Routes>

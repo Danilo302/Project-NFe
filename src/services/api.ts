@@ -28,9 +28,17 @@ export const api = createApi({
             method: 'POST',
             body: body
             })
+        }),
+        editPessoa: builder.mutation<RegisterUserType, RegisterUserType>({
+            query: (body) => ({
+                // CPF é o identificador único, então usamos ele para construir a URL de edição
+                url: `/pessoas-fisicas/${body.cpf}`,
+                method: 'PUT',
+                body: body
+            })
         })
     })
 });
 
-export const { usePurchaseMutation, useRegisterMutation, useGetMunicipiosQuery, useGetPessoasQuery } = api;
+export const { usePurchaseMutation, useRegisterMutation, useGetMunicipiosQuery, useGetPessoasQuery, useEditPessoaMutation } = api;
 export default api;
