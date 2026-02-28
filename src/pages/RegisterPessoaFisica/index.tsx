@@ -1,13 +1,28 @@
 import { useFormik } from "formik";
 import * as Yup  from "yup";
-import { useRegisterMutation, useGetMunicipiosQuery } from "../../services/api";
+import { useRegisterMutation, useGetMunicipiosQuery, useEditPessoaMutation, useGetPessoaQuery } from "../../services/api";
 import { useState, useMemo } from "react";
 import { Container, FormButton, FormGroup, FormRow } from "./styles";
 import { RegimeTributario } from "../../Utils/enums";
+import { useNavigate, useParams, } from "react-router-dom";
+
+type Params = {
+    id?: string;
+}
 
 const RegisterPessoaFisica = () => {
+    console.log(useParams<Params>());
+    const navigate = useNavigate();
+    const { data: pessoa } = useGetPessoaQuery(useParams<Params>().id || '');
+    const [editPessoa] = useEditPessoaMutation();
     const [register] = useRegisterMutation();
     const { data: municipios} = useGetMunicipiosQuery();
+
+    if (pessoa) {
+        console.log("Pessoa recebida para edição:", pessoa);
+    }else {
+        console.log("Nenhuma pessoa recebida, modo de cadastro");
+    }
 
     const [selectedUf, setSelectedUf] = useState<string>('');
 
@@ -27,29 +42,38 @@ const RegisterPessoaFisica = () => {
 
 
     const form = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            nome: '',
-            cpf: '',
-            email: '',
-            senha: '',
-            telefone: '',
-            inscricaoEstadual: '',
-            regimeTributario: '',
-            municipio: ''
+            nome: pessoa?.nome || '',
+            cpf: pessoa?.cpf || '',
+            email: pessoa?.email || '',
+            senha: pessoa?.usuario?.senha || '',
+            telefone: pessoa?.telefone || '',
+            inscricaoEstadual: pessoa?.inscricaoEstadual?.codigo || '',
+            regimeTributario: pessoa?.regimeTributario || '',
+            municipio: pessoa?.municipio?.nome || ''
         },
         validationSchema: Yup.object({
-            nome: Yup.string().required("Nome é obrigatório"),
-            cpf: Yup.string().required("CPF é obrigatório"),
-            email: Yup.string().email("Email inválido").required("Email é obrigatório"),
-            senha: Yup.string().required("Senha é obrigatória"),
-            telefone: Yup.string().required("Telefone é obrigatório"),
-            inscricaoEstadual: Yup.string().required("Inscrição Estadual é obrigatória"),
-            regimeTributario: Yup.string().required("Regime Tributário é obrigatório"),
-            municipio: Yup.string().required("Município é obrigatório")
+            nome: pessoa ? Yup.string().optional() : Yup.string().required("Nome é obrigatório"),
+            cpf:pessoa ? Yup.string().optional() : Yup.string().required("CPF é obrigatório"),
+            email:pessoa ? Yup.string().optional() : Yup.string().email("Email inválido").required("Email é obrigatório"),
+            senha:pessoa ? Yup.string().optional() : Yup.string().required("Senha é obrigatória"),
+            telefone:pessoa ? Yup.string().optional() : Yup.string().required("Telefone é obrigatório"),
+            inscricaoEstadual:pessoa ? Yup.string().optional() : Yup.string().required("Inscrição Estadual é obrigatória"),
+            regimeTributario:pessoa ? Yup.string().optional() : Yup.string().required("Regime Tributário é obrigatório"),
+            municipio:pessoa ? Yup.string().optional() : Yup.string().required("Município é obrigatório")
         }),
         onSubmit: async (values) => {
             try {
-
+                if (pessoa) {
+                    const updateData = Object.fromEntries(
+                        Object.entries(values).filter(([_, value]) => value !== '' && value !== null && value !== undefined)
+                    );
+                    
+                await editPessoa({...updateData, id: pessoa.id}).unwrap();
+                alert("Pessoa física editada com sucesso!"); 
+                navigate('/Listar');
+            } else {
                 const payload = {
                     nome: values.nome,
                     cpf: values.cpf,
@@ -63,9 +87,10 @@ const RegisterPessoaFisica = () => {
                 await register(payload).unwrap();
                 alert("Cadastro realizado com sucesso!");
                 form.resetForm();
-            } catch (err: any) {
-
-                const mensagemErro = err.data?.message || "Erro desconhecido ao cadastrar";
+                }
+            } catch (err) {
+                const error = err as { data?: { message: string } };
+                const mensagemErro = error.data?.message || "Erro desconhecido ao cadastrar";
                 alert("Erro ao cadastrar pessoa física: " + mensagemErro);
                 console.error(err);
             }

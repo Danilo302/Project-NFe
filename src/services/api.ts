@@ -12,15 +12,18 @@ export const api = createApi({
         getMunicipios: builder.query<MunicipioType[], void>({
             query: () => '/municipios'
         }),
-    purchase: builder.mutation<UserType, string>({
+    purchase: builder.mutation<LoginType, string>({
         query: (body) => ({
             url: '/usuario',
             method: 'POST',
             body: body
             })
         }),
-        getPessoas: builder.query<RegisterUserType[], void>({
+        getPessoas: builder.query<UserType[], void>({
             query: () => '/pessoas-fisicas'
+        }),
+        getPessoa: builder.query<UserType, string>({
+            query: (id) => `/pessoas-fisicas/${id}`
         }),
     register: builder.mutation<RegisterUserType, RegisterUserType>({
         query: (body) => ({
@@ -29,10 +32,9 @@ export const api = createApi({
             body: body
             })
         }),
-        editPessoa: builder.mutation<RegisterUserType, RegisterUserType>({
+        editPessoa: builder.mutation<RegisterUserType, Partial<RegisterUserType> & { id: string }>({
             query: (body) => ({
-                // CPF é o identificador único, então usamos ele para construir a URL de edição
-                url: `/pessoas-fisicas/${body.cpf}`,
+                url: `/pessoas-fisicas/${body.id}`,
                 method: 'PUT',
                 body: body
             })
@@ -40,5 +42,11 @@ export const api = createApi({
     })
 });
 
-export const { usePurchaseMutation, useRegisterMutation, useGetMunicipiosQuery, useGetPessoasQuery, useEditPessoaMutation } = api;
+export const { usePurchaseMutation, 
+        useRegisterMutation, 
+        useGetMunicipiosQuery, 
+        useGetPessoasQuery, 
+        useEditPessoaMutation, 
+        useGetPessoaQuery 
+        } = api;
 export default api;

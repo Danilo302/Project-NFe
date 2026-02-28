@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
 
-type Props = RegisterUserType;
+type Props = UserType;
 
 const ItensList = (props: Props) => {
     return (
@@ -8,7 +9,7 @@ const ItensList = (props: Props) => {
             <td>{props.cpf}</td>
             <td>{props.email}</td>
             <td>
-                <a href="">Editar</a>
+                <Link to={`/Editar/${props.id}`}>Editar</Link>
                 <a className="del" href="">Excluir</a>
             </td>
         </tr>
