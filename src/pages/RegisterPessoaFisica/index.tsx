@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup  from "yup";
 import { useRegisterMutation, useGetMunicipiosQuery, useEditPessoaMutation, useGetPessoaQuery } from "../../services/api";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Container, FormButton, FormGroup, FormRow } from "./styles";
 import { RegimeTributario } from "../../Utils/enums";
 import { useNavigate, useParams, } from "react-router-dom";
@@ -25,6 +25,12 @@ const RegisterPessoaFisica = () => {
     }
 
     const [selectedUf, setSelectedUf] = useState<string>('');
+
+    useEffect(() => {
+    if (pessoa && pessoa.municipio && pessoa.municipio.uf) {
+        setSelectedUf(pessoa.municipio.uf.sigla);
+    }
+}, [pessoa]);
 
     const ufs = useMemo(() => {
         if (!municipios) return [];
@@ -51,7 +57,7 @@ const RegisterPessoaFisica = () => {
             telefone: pessoa?.telefone || '',
             inscricaoEstadual: pessoa?.inscricaoEstadual?.codigo || '',
             regimeTributario: pessoa?.regimeTributario || '',
-            municipio: pessoa?.municipio?.nome || ''
+            municipio: pessoa?.municipio?.codigo || ''
         },
         validationSchema: Yup.object({
             nome: pessoa ? Yup.string().optional() : Yup.string().required("Nome é obrigatório"),
@@ -108,7 +114,7 @@ const RegisterPessoaFisica = () => {
                     <input type="text" id="name" name="nome" value={form.values.nome} onChange={form.handleChange} />
 
                     <label htmlFor="cpf">CPF:</label>
-                    <input type="text" id="cpf" name="cpf" value={form.values.cpf} onChange={form.handleChange} />
+                    <input type="text" id="cpf" name="cpf" value={form.values.cpf} onChange={form.handleChange} disabled={!!pessoa}/>
 
                     <label htmlFor="email">Email:</label>
                     <input type="email" id="email" name="email" value={form.values.email} onChange={form.handleChange} />

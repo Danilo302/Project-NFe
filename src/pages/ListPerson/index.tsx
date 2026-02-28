@@ -6,8 +6,9 @@ import { useGetPessoasQuery } from "../../services/api";
 
 
 const ListPerson = () => {
-    const { data } = useGetPessoasQuery();
-
+    const { data } = useGetPessoasQuery(undefined, {
+        refetchOnMountOrArgChange: true,
+    });
 
     const [searchTerm, setSearchTerm] = useState("");
 

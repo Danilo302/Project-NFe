@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
+    reducerPath: "api",
     baseQuery: fetchBaseQuery({
         baseUrl: "/api",
         prepareHeaders: (headers) => {
@@ -8,6 +9,7 @@ export const api = createApi({
             return headers;
     },
     }),
+    tagTypes: ['Pessoa'],
     endpoints: (builder) => ({
         getMunicipios: builder.query<MunicipioType[], void>({
             query: () => '/municipios'
@@ -20,24 +22,31 @@ export const api = createApi({
             })
         }),
         getPessoas: builder.query<UserType[], void>({
-            query: () => '/pessoas-fisicas'
+            query: () => '/pessoas-fisicas',
+            providesTags: ['Pessoa']
         }),
         getPessoa: builder.query<UserType, string>({
-            query: (id) => `/pessoas-fisicas/${id}`
+            query: (id) => `/pessoas-fisicas/${id}`,
+            providesTags: (result, error, id) => [{ type: 'Pessoa', id }],
         }),
     register: builder.mutation<RegisterUserType, RegisterUserType>({
         query: (body) => ({
             url: '/pessoas-fisicas',
             method: 'POST',
             body: body
-            })
+            }),
+            invalidatesTags: ['Pessoa'],
         }),
         editPessoa: builder.mutation<RegisterUserType, Partial<RegisterUserType> & { id: string }>({
             query: (body) => ({
                 url: `/pessoas-fisicas/${body.id}`,
                 method: 'PUT',
                 body: body
-            })
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Pessoa' }, 
+                { type: 'Pessoa', id: arg.id }
+            ],
         })
     })
 });
