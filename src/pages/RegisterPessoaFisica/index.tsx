@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup  from "yup";
 import { useRegisterMutation, useGetMunicipiosQuery, useEditPessoaMutation, useGetPessoaQuery } from "../../services/api";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Container, FormButton, FormGroup, FormRow } from "./styles";
 import { RegimeTributario } from "../../Utils/enums";
 import { useNavigate, useParams, } from "react-router-dom";
@@ -24,13 +24,7 @@ const RegisterPessoaFisica = () => {
         console.log("Nenhuma pessoa recebida, modo de cadastro");
     }
 
-    const [selectedUf, setSelectedUf] = useState<string>('');
-
-    useEffect(() => {
-    if (pessoa && pessoa.municipio && pessoa.municipio.uf) {
-        setSelectedUf(pessoa.municipio.uf.sigla);
-    }
-}, [pessoa]);
+    const [selectedUf, setSelectedUf] = useState<string>(pessoa?.municipio?.uf?.sigla || '');
 
     const ufs = useMemo(() => {
         if (!municipios) return [];
@@ -73,7 +67,7 @@ const RegisterPessoaFisica = () => {
             try {
                 if (pessoa) {
                     const updateData = Object.fromEntries(
-                        Object.entries(values).filter(([_, value]) => value !== '' && value !== null && value !== undefined)
+                        Object.entries(values).filter(([, value]) => value !== '' && value !== null && value !== undefined)
                     );
                     
                 await editPessoa({...updateData, id: pessoa.id}).unwrap();
