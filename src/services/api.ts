@@ -47,7 +47,17 @@ export const api = createApi({
                 { type: 'Pessoa' }, 
                 { type: 'Pessoa', id: arg.id }
             ],
-        })
+        }),
+        deletePessoa: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `/pessoas-fisicas/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: (result, error, id) => [
+                { type: 'Pessoa' }, 
+                { type: 'Pessoa', id }
+            ],
+        }),
     })
 });
 
@@ -56,6 +66,7 @@ export const { usePurchaseMutation,
         useGetMunicipiosQuery, 
         useGetPessoasQuery, 
         useEditPessoaMutation, 
-        useGetPessoaQuery 
+        useGetPessoaQuery,
+        useDeletePessoaMutation 
         } = api;
 export default api;

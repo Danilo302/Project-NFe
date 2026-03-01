@@ -1,10 +1,14 @@
+import { useDeletePessoaMutation } from "../../services/api";
 import { ModalContainer, ModalContent } from "./styles";
+
 
 type Props = UserType & {
     onCancel: () => void;
 }
 
 const ModalDelete = (props: Props) => {
+    const [deletePessoa] = useDeletePessoaMutation();
+
     return (
         <ModalContainer>
             <ModalContent>
@@ -12,7 +16,7 @@ const ModalDelete = (props: Props) => {
                     <h3 className="medium-font">Tem certeza que deseja excluir o usuário {props.nome}?</h3>
                 </header>
                 <div className="options">
-                    <button className="btn buttonSuccess" >Sim</button>
+                    <button className="btn buttonSuccess" onClick={() => deletePessoa(props.id)}>Sim</button>
                     <button onClick={props.onCancel} className="btn buttonError">Não</button>
                 </div>
             </ModalContent>
