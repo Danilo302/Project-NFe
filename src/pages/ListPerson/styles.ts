@@ -12,12 +12,6 @@ export const ListPersonContainer = styled.div`
         justify-content: space-between;
         align-items: center;
         margin-bottom: 16px;
-        a {
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 4px;
-        }
     }
 
     form {
@@ -39,15 +33,6 @@ export const ListPersonContainer = styled.div`
                 border-radius: 4px;
             }
         }
-
-        button {
-            padding: 8px 16px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
     }
 
     table {
@@ -65,17 +50,9 @@ export const ListPersonContainer = styled.div`
             text-align: left;
         }
 
-            a {
-                margin-right: 8px;
-                background-color: #007bff;
-                color: #fff;
-                padding: 4px 8px;
-                border-radius: 4px;
-                text-decoration: none;
-            }
-            
-            .del {
-                background-color: #dc3545;
-            }
+        .options {
+            display: flex;
+            gap: 8px;
+        }
     }
 `

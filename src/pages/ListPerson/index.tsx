@@ -17,7 +17,7 @@ const ListPerson = () => {
         <div>
             <h1 className="big-font">Cadastro geral</h1>
 
-            <Link to="/Cadastrar">+ Cadastrar</Link>
+            <Link className="btn" to="/Cadastrar">+ Cadastrar</Link>
         </div>
 
         <form action="">
@@ -28,9 +28,6 @@ const ListPerson = () => {
                 <input type="text" id="cpf" />
                 <label htmlFor="email">Email</label>
                 <input type="email" id="email" />
-            </div>
-            <div>
-                <button>Buscar</button>
             </div>
         </form>
         <table>
